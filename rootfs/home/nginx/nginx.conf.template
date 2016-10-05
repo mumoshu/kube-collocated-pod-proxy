@@ -1,0 +1,24 @@
+worker_processes  1;
+
+daemon off;
+
+user nginx nginx;
+
+error_log /dev/stdout info;
+
+events {
+    worker_connections  1024;
+}
+
+stream {
+    upstream %%PROTOCOL%%_upstreams {
+        server %%TARGET_IP%%:%%TARGET_PORT%%;
+    }
+
+    server {
+        listen %%SOURCE_PORT%% %%PROTOCOL%%;
+        proxy_pass %%PROTOCOL%%_upstreams;
+        proxy_timeout 1s;
+        proxy_responses 1;
+    }
+}
