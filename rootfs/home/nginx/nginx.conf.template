@@ -4,7 +4,7 @@ daemon off;
 
 user nginx nginx;
 
-error_log /dev/stdout info;
+error_log /dev/stdout %%LOG_LEVEL%%;
 
 events {
     worker_connections  1024;

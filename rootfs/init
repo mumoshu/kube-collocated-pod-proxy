@@ -33,6 +33,10 @@ if [ "${PROTOCOL}" != "udp" ]; then
   exit 1
 fi
 
+if [ "${LOG_LEVEL}" == "" ]; then
+  LOG_LEVEL=warn
+fi
+
 selector="${SELECTOR}"
 namespace="${NAMESPACE}"
 node_name=$(kubectl get node --output=json | jq -r '.items[0].metadata.name')
@@ -52,6 +56,8 @@ TARGET_IP=${pod_ip}
 sed -e "s/%%TARGET_PORT%%/${TARGET_PORT}/" \
     -e "s/%%TARGET_IP%%/${TARGET_IP}/" \
     -e "s/%%PROTOCOL%%/${PROTOCOL}/" \
-    -e "s/%%SOURCE_PORT%%/${SOURCE_PORT}/" nginx.conf.template > nginx.conf
+    -e "s/%%SOURCE_PORT%%/${SOURCE_PORT}/" \
+    -e "s/%%LOG_LEVEL%%/${LOG_LEVEL}/" \
+    nginx.conf.template > nginx.conf
 
 exec dumb-init --single-child -- nginx -c $(pwd)/nginx.conf
