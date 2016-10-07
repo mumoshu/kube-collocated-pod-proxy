@@ -1,4 +1,4 @@
-PROXY_VERSION ?= 0.9.0
+PROXY_VERSION ?= 0.9.1
 KUBE_VERSION ?= 1.3.6
 
 REPOSITORY ?= mumoshu/kube-collocated-pod-proxy
