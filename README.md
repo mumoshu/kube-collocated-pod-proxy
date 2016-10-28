@@ -38,6 +38,14 @@ spec:
         value: udp
       - name: NAMESPACE
         value: kube-system
+      - name: MY_POD_NAME
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.name
+      - name: MY_POD_NAMESPACE
+        valueFrom:
+          fieldRef:
+            fieldPath: metadata.namespace
 ```
 
 ## Demo
