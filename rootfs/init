@@ -39,7 +39,7 @@ fi
 
 selector="${SELECTOR}"
 namespace="${NAMESPACE}"
-node_name=$(kubectl get node --output=json | jq -r '.items[0].metadata.name')
+node_name=$(kubectl get po ${MY_POD_NAME} --namespace ${MY_POD_NAMESPACE} --output jsonpath="{.spec.nodeName}")
 pod_ip=$(kubectl get po --selector ${selector} --namespace ${namespace} --output json | jq -r ".items[] | select(.spec.nodeName == \"${node_name}\") | .status.podIP")
 
 pod_count=$(echo "${pod_ip}" | wc -l)
